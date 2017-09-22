@@ -1,6 +1,15 @@
 #!/bin/sh
 
-rm result.txt > /dev/null
+
+echo "Running tests"
+python btc.py test > /dev/null
+if [ "$?" -ne "0" ]
+then
+  echo "Tests failed"
+  exit 1
+fi
+
+rm result.txt 2> /dev/null
 
 echo "Testing recovery #1"
 words="cover tube shrug thought trick scout extra orphan spin banana civil error hockey ranch vivid round logic stable brass error fork duck bomb soup"
@@ -34,9 +43,9 @@ fi
 
 rm result.txt
 
-for i in `seq 1 10`;
+for i in `seq 1 3`;
 do
-  rm gen-verify.txt rec-verify.txt > /dev/null
+  rm gen-verify.txt rec-verify.txt 2> /dev/null
   echo "Encode decode no passphrase iteration #$i"
 
   # Generate
@@ -61,9 +70,9 @@ do
 
 done
 
-for i in `seq 1 10`;
+for i in `seq 1 3`;
 do
-  rm gen-verify.txt rec-verify.txt > /dev/null
+  rm gen-verify.txt rec-verify.txt 2> /dev/null
   echo "Encode decode with passphrase iteration #$i"
 
   # Generate
@@ -88,9 +97,9 @@ do
 
 done
 
-for i in `seq 1 10`;
+for i in `seq 1 3`;
 do
-  rm gen-verify.txt rec-verify.txt > /dev/null
+  rm gen-verify.txt rec-verify.txt 2> /dev/null
   echo "Encode decode different passphrases iteration #$i"
 
   # Generate
