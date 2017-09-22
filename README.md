@@ -17,7 +17,9 @@ Execute internal tests:
   $ python btc.py test
 
     This runs a suite of tests to ensure correct operation using published test vectors. This 
-    should be run at least once on the machine on which you intend to generate keys.
+    should be run at least once on the machine on which you intend to generate keys. The  test 
+    script ("test-btc.sh") performs additional tests. It checks that the outputs of this tool 
+    can be used to recover the same key.
 
 Generate new private key:
 
