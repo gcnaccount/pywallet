@@ -1033,8 +1033,11 @@ path = "m/44'/0'/0'/0/0"
 address_0 = bip_44_key.derive_subkey(0)
 address_0_2 = parse_path(seed, path)
 print "Private Key 0:        ", bitcoin_wallet(address_0.get_private_key()).get_wif(True)
-print "Private Key 0:        ", binascii.hexlify(ser_p(address_0.get_public_key()))
+print "Public Key 0:         ", binascii.hexlify(ser_p(address_0.get_public_key()))
 print "Address 0:            ", bitcoin_wallet(address_0.get_private_key()).get_address_as_b58(True)
+
+assert validate_address(bitcoin_wallet(address_0.get_private_key()).get_address_as_b58(True))
+assert validate_address(bitcoin_wallet(address_0.get_private_key()).get_address_as_b58(False))
 
 assert bitcoin_wallet(address_0.get_private_key()).get_wif(True) == bitcoin_wallet(address_0_2.get_private_key()).get_wif(True)
 assert binascii.hexlify(ser_p(address_0.get_public_key())) == binascii.hexlify(ser_p(address_0_2.get_public_key()))
@@ -1046,8 +1049,11 @@ path = "m/44'/0'/0'/0/1"
 address_1 = bip_44_key.derive_subkey(1)
 address_1_2 = parse_path(seed, path)
 print "Private Key 1:        ", bitcoin_wallet(address_1.get_private_key()).get_wif(True)
-print "Private Key 1:        ", binascii.hexlify(ser_p(address_1.get_public_key()))
+print "Public Key 1:         ", binascii.hexlify(ser_p(address_1.get_public_key()))
 print "Address 1:            ", bitcoin_wallet(address_1.get_private_key()).get_address_as_b58(True)
+
+assert validate_address(bitcoin_wallet(address_1.get_private_key()).get_address_as_b58(True))
+assert validate_address(bitcoin_wallet(address_1.get_private_key()).get_address_as_b58(False))
 
 assert bitcoin_wallet(address_1.get_private_key()).get_wif(True) == bitcoin_wallet(address_1_2.get_private_key()).get_wif(True)
 assert binascii.hexlify(ser_p(address_1.get_public_key())) == binascii.hexlify(ser_p(address_1_2.get_public_key()))
