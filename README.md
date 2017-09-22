@@ -14,7 +14,7 @@ Usage:
 
 Execute internal tests:
 
-  $ pthon btc.py test
+  $ python btc.py test
 
     This runs a suite of tests to ensure correct operation using published test vectors. This 
     should be run at least once on the machine on which you intend to generate keys.
