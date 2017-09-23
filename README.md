@@ -31,7 +31,7 @@ Execute internal tests:
   $ python btc.py test
 
     This runs a suite of tests to ensure correct operation using published test vectors. This 
-    should be run at least once on the machine on which you intend to generate keys. The  test 
+    should be run at least once on the machine on which you intend to generate keys. The test 
     script ("test-btc.sh") performs additional tests. It checks that the outputs of this tool 
     can be used to recover the same key.
 
@@ -52,5 +52,5 @@ Recover a private key:
     This recovers a private key from the 24-word mnemonic and optionally a passphase (if one was 
     supplied at the creation). It is very prudent to perform a recovery of a newly generated and 
     backed up private key to ensure it is properly recorded before sending any coins to it.  
-    Additionally, verifying proper receipt and spendability with a small number of coins is good to 
+    Additionally, verifying proper receipt and spendability with a low value of coins is good to 
     ensure a correct correspondance between the public address and the private key.
