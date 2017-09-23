@@ -1,13 +1,4 @@
 #!/usr/bin/python
-
-# Implements: https://www.ledgerwallet.com/support/bip39-standalone.html (wallet generation)
-# 
-# Enables secure, offline key generation, according to BIP 32, BIP 44, and BIP 39.
-#
-# It outputs the seed as a 24-word (264-bit) mnemonic which can be written on paper or in 
-# a fire proof cryptosteel.com device.  The mnemonic phrase may be imported into Wallet Apps 
-# such as Electrum, Mycelium, and Coinomi
-#
 ################################################################################################
 # 
 # Copyright (c) 2017 Jason Resch
@@ -32,14 +23,26 @@
 #
 ################################################################################################
 #
+# Implements: https://www.ledgerwallet.com/support/bip39-standalone.html (wallet generation)
+# 
+# Enables secure, offline key generation, according to BIP 32, BIP 44, and BIP 39.
+#
+# It outputs the seed as a 24-word (264-bit) mnemonic which can be written on paper or in 
+# a fire proof cryptosteel.com device.  The mnemonic phrase may be imported into Wallet Apps 
+# such as Electrum, Mycelium, and Coinomi
+#
 # Usage:
 #
-# Generate new private key:
+# Execute internal tests:
 #
 # $ python btc.py test
 #
 # This runs a suite of tests to ensure correct operation using published test vectors. This 
-# should be run at least once on the machine on which you intend to generate keys.
+# should be run at least once on the machine on which you intend to generate keys. The  test 
+# script ("test-btc.sh") performs additional tests. It checks that the outputs of this tool 
+# can be used to recover the same key.
+#
+# Generate new private key:
 #
 # $ python btc.py generate [additional entropy] [passphrase]
 #
@@ -92,18 +95,6 @@ def int_to_hex(num, bit_length=None):
 # Elliptic Curve Functions
 ################################################################################################
 
-def egcd(a, b):
-  if a == 0:
-    return (b, 0, 1)
-  g, y, x = egcd(b % a,a)
-  return (g, x - (b // a) * y, y)
-
-def modinv(a, m):
-  g, x, y = egcd(a, m)
-  if g != 1:
-    raise Exception('No modular inverse')
-  return x % m
-
 class curve:
   def __init__(self, a, b, p, r, g):
     self.a = a
@@ -113,9 +104,7 @@ class curve:
     self.g = g
 
   def mod_inv(self, x):
-    if (x < 0):
-      x += self.p
-    return modinv(x, self.p)
+    return pow(x, self.p - 2, self.p)
 
   def add_points(self, p, q):
     s = (p.y - q.y) * self.mod_inv(p.x - q.x) % self.p
@@ -499,225 +488,226 @@ def print_usage_and_exit():
 
 def main():
 
-	# Parse command line options
-	if len(argv) < 2:
-	  print_usage_and_exit()
-	  exit(1)
+  # Parse command line options
+  if len(argv) < 2:
+    print_usage_and_exit()
+    exit(1)
 
-	supplied_entropy = ""
-	passphrase = ""
+  supplied_entropy = ""
+  passphrase = ""
 
-	if len(argv) >= 2:
+  if len(argv) >= 2:
 
-	  word_encoder = mnemonic()
+    word_encoder = mnemonic()
 
-	  if (argv[1].lower() == "test"):
-		run_tests()
-		exit(0)
+    if (argv[1].lower() == "test"):
+      run_tests()
+      exit(0)
 	
-	  if (argv[1].lower() == "generate"):
-		if len(argv) >= 3:
-		  supplied_entropy = argv[2]
-		if len(argv) >= 4:
-		  passphrase = argv[3]
+    if (argv[1].lower() == "generate"):
+      if len(argv) >= 3:
+        supplied_entropy = argv[2]
+      if len(argv) >= 4:
+        passphrase = argv[3]
 	  
-		print "Generating new private key..."
-		print
-		print "Additional Entropy:   ", supplied_entropy
-		print "Passphrase:           ", passphrase
+      print "Generating new private key..."
+      print
+      print "Additional Entropy:   ", supplied_entropy
+      print "Passphrase:           ", passphrase
 
-		# Generate some randomness
-		generated_entropy = SystemRandom().randint(1, pow(2, 384))
-		print "System entropy:       ", generated_entropy
+      # Generate some randomness
+      generated_entropy = SystemRandom().randint(1, pow(2, 384))
+      print "System entropy:       ", generated_entropy
 	
-		# Combined entropy
-		combined_entropy = str(generated_entropy) + supplied_entropy
-		print "Combined Entropy:     ", combined_entropy
+      # Combined entropy
+      combined_entropy = str(generated_entropy) + supplied_entropy
+      print "Combined Entropy:     ", combined_entropy
 	
-		# Hash to form conditioned entropy
-		entropy = sha256(combined_entropy).digest()
-		print "Conditioned Entropy:  ", binascii.hexlify(entropy)
+      # Hash to form conditioned entropy
+      entropy = sha256(combined_entropy).digest()
+      print "Conditioned Entropy:  ", binascii.hexlify(entropy)
 
-		# Create word set
-		word_set = word_encoder.encode(entropy)
-		recovered = word_encoder.decode(word_set)
-		assert entropy == recovered
-		print "Entropy as words:     ", word_set
+      # Create word set
+      word_set = word_encoder.encode(entropy)
+      recovered = word_encoder.decode(word_set)
+      assert entropy == recovered
+      print "Entropy as words:     ", word_set
 
-	  elif (argv[1].lower() == "recover"):
-		if len(argv) >= 3:
-		  word_set = argv[2].strip().lower()
-		  word_encoder.decode(word_set)
-		if len(argv) >= 4:
-		  passphrase = argv[3]
-		print "Restoring existing private key..."
-		print
-		print "Mnemonic phrase:      ", word_set
-		print "Passphrase:           ", passphrase
-	  else: 
-		print_usage_and_exit()
+    elif (argv[1].lower() == "recover"):
+      if len(argv) >= 3:
+        word_set = argv[2].strip().lower()
+        word_encoder.decode(word_set)
+      if len(argv) >= 4:
+        passphrase = argv[3]
+        
+      print "Restoring existing private key..."
+      print
+      print "Mnemonic phrase:      ", word_set
+      print "Passphrase:           ", passphrase
+    else: 
+      print_usage_and_exit()
 
-	print
+  print
 
-	# Generate seed from words
-	seed = word_encoder.generate_seed(word_set, passphrase)
-	print "Seed:                 ", binascii.hexlify(seed)
+  # Generate seed from words
+  seed = word_encoder.generate_seed(word_set, passphrase)
+  print "Seed:                 ", binascii.hexlify(seed)
 
-	print
+  print
 
-	################################################################################################
-	# Generate private key and chain code from seed
-	################################################################################################
+  ################################################################################################
+  # Generate private key and chain code from seed
+  ################################################################################################
 
-	# Hash random seed and parse it to secret key and chain code
-	seed_hmac = hmac.new("Bitcoin seed", seed, sha512).hexdigest()
-	secret_key = seed_hmac[:64]
-	chain_code = binascii.unhexlify(seed_hmac[64:])
+  # Hash random seed and parse it to secret key and chain code
+  seed_hmac = hmac.new("Bitcoin seed", seed, sha512).hexdigest()
+  secret_key = seed_hmac[:64]
+  chain_code = binascii.unhexlify(seed_hmac[64:])
 
-	private_key = int(secret_key, 16)
-	if (private_key > secp256k1.r):
-	  raise Exception("Private key is too large!!!")
+  private_key = int(secret_key, 16)
+  if (private_key > secp256k1.r):
+    raise Exception("Private key is too large!!!")
 
-	wallet = bitcoin_wallet(private_key_int=private_key)
+  wallet = bitcoin_wallet(private_key_int=private_key)
 
-	print "Private Key as Int:   ", wallet.get_private_key_as_int()
+  print "Private Key as Int:   ", wallet.get_private_key_as_int()
 
-	private_key_hex = wallet.get_private_key_as_hex()
-	print "Private Key as Hex:   ", private_key_hex
+  private_key_hex = wallet.get_private_key_as_hex()
+  print "Private Key as Hex:   ", private_key_hex
 
-	print
+  print
 
-	################################################################################################
-	# Export and Import WIF
-	################################################################################################
+  ################################################################################################
+  # Export and Import WIF
+  ################################################################################################
 
-	wif = wallet.get_wif()
-	print "Private Key as WIF:   ", wif
+  wif = wallet.get_wif()
+  print "Private Key as WIF:   ", wif
 
-	valid = validate_wallet_input_format(wif)
-	print "WIF is valid:         ", valid 
-	assert valid == True
+  valid = validate_wallet_input_format(wif)
+  print "WIF is valid:         ", valid 
+  assert valid == True
 
-	imported_wallet = bitcoin_wallet(private_key_wif=wif)
-	assert wallet.get_private_key_as_int() == imported_wallet.get_private_key_as_int()
-	assert wallet.get_address_as_b58() == imported_wallet.get_address_as_b58()
-	assert validate_address(imported_wallet.get_address_as_b58())
-	assert wallet.get_address_as_b58(True) == imported_wallet.get_address_as_b58(True)
-	assert validate_address(imported_wallet.get_address_as_b58(True))
+  imported_wallet = bitcoin_wallet(private_key_wif=wif)
+  assert wallet.get_private_key_as_int() == imported_wallet.get_private_key_as_int()
+  assert wallet.get_address_as_b58() == imported_wallet.get_address_as_b58()
+  assert validate_address(imported_wallet.get_address_as_b58())
+  assert wallet.get_address_as_b58(True) == imported_wallet.get_address_as_b58(True)
+  assert validate_address(imported_wallet.get_address_as_b58(True))
 
-	# Create Wallet form WIF
-	print
+  # Create Wallet form WIF
+  print
 
-	################################################################################################
-	# Compute Public Key
-	################################################################################################
+  ################################################################################################
+  # Compute Public Key
+  ################################################################################################
 
-	# Derive Public Key from Private Key
-	public_key = wallet.get_public_key_as_point()
-	print "Public Key Point:     ", public_key
-	print "Public Key as Hex:    ", public_key.as_hex()
+  # Derive Public Key from Private Key
+  public_key = wallet.get_public_key_as_point()
+  print "Public Key Point:     ", public_key
+  print "Public Key as Hex:    ", public_key.as_hex()
 
-	print
+  print
 
-	################################################################################################
-	# Compute Address
-	################################################################################################
+  ################################################################################################
+  # Compute Address
+  ################################################################################################
 
-	# Form bitcoin address
-	hex_address = wallet.get_address_as_hex()
-	print "Hex address:          ", hex_address
+  # Form bitcoin address
+  hex_address = wallet.get_address_as_hex()
+  print "Hex address:          ", hex_address
 
-	# Convert to base 58
-	address = wallet.get_address_as_b58()
-	print "Address (B58):        ", address
+  # Convert to base 58
+  address = wallet.get_address_as_b58()
+  print "Address (B58):        ", address
 
-	################################################################################################
-	# Verify Address
-	################################################################################################
+  ################################################################################################
+  # Verify Address
+  ################################################################################################
 
-	valid = validate_address(address)
-	print "Address is valid:     ", valid 
-	assert valid == True
+  valid = validate_address(address)
+  print "Address is valid:     ", valid 
+  assert valid == True
 
-	print
+  print
 
-	################################################################################################
-	# Create Child Keys
-	################################################################################################
+  ################################################################################################
+  # Create Child Keys
+  ################################################################################################
 
-	chain_code_hex = binascii.hexlify(chain_code)
-	print "Chain Code as Hex:    ", chain_code_hex
+  chain_code_hex = binascii.hexlify(chain_code)
+  print "Chain Code as Hex:    ", chain_code_hex
 
-	print
+  print
 
-	# Create hierarchical deterministic wallet
-	ckd = child_key_derivation(chain_code_hex, public_key, private_key)
-	print "BIP 32 Root Private:  ", ckd.serialize_private()
-	print "BIP 32 Root Public:   ", ckd.serialize_public()
+  # Create hierarchical deterministic wallet
+  ckd = child_key_derivation(chain_code_hex, public_key, private_key)
+  print "BIP 32 Root Private:  ", ckd.serialize_private()
+  print "BIP 32 Root Public:   ", ckd.serialize_public()
 
-	print
+  print
 
-	# Derive child key using private key
-	child1 = ckd.derive_subkey(0)
+  # Derive child key using private key
+  child1 = ckd.derive_subkey(0)
 
-	# Derive child key from public key only
-	ckd2 = child_key_derivation(chain_code_hex, public_key)
-	child2 = ckd2.derive_subkey(0)
-	assert child1.get_public_key() == child2.get_public_key()
-	assert child1.get_chain_code() == child2.get_chain_code()
+  # Derive child key from public key only
+  ckd2 = child_key_derivation(chain_code_hex, public_key)
+  child2 = ckd2.derive_subkey(0)
+  assert child1.get_public_key() == child2.get_public_key()
+  assert child1.get_chain_code() == child2.get_chain_code()
 
-	path = "m/44'/0'/0'"
-	account_extended_key = parse_path(seed, path)
-	print "Acct Ext Private Key: ", account_extended_key.serialize_private()
-	print "Acct Ext Public Key:  ", account_extended_key.serialize_public()
-	print "Acct Ext 44 Path:     ", account_extended_key.get_path()
+  path = "m/44'/0'/0'"
+  account_extended_key = parse_path(seed, path)
+  print "Acct Ext Private Key: ", account_extended_key.serialize_private()
+  print "Acct Ext Public Key:  ", account_extended_key.serialize_public()
+  print "Acct Ext 44 Path:     ", account_extended_key.get_path()
 
-	print
+  print
 
-	path = "m/44'/0'/0'/0"
-	bip_44_key = account_extended_key.derive_subkey(0)
-	bip_44_key_2 = parse_path(seed, path)
-	print "BIP 44 Private Key:   ", bip_44_key.serialize_private()
-	print "BIP 44 Public Key:    ", bip_44_key.serialize_public()
-	print "BIP 44 Path:          ", bip_44_key.get_path()
+  path = "m/44'/0'/0'/0"
+  bip_44_key = account_extended_key.derive_subkey(0)
+  bip_44_key_2 = parse_path(seed, path)
+  print "BIP 44 Private Key:   ", bip_44_key.serialize_private()
+  print "BIP 44 Public Key:    ", bip_44_key.serialize_public()
+  print "BIP 44 Path:          ", bip_44_key.get_path()
 
-	assert bip_44_key.serialize_private() == bip_44_key_2.serialize_private()
-	assert bip_44_key.serialize_public() == bip_44_key_2.serialize_public()
-	assert bip_44_key.get_path() == bip_44_key_2.get_path()
+  assert bip_44_key.serialize_private() == bip_44_key_2.serialize_private()
+  assert bip_44_key.serialize_public() == bip_44_key_2.serialize_public()
+  assert bip_44_key.get_path() == bip_44_key_2.get_path()
 
-	print
+  print
 
-	path = "m/44'/0'/0'/0/0"
-	address_0 = bip_44_key.derive_subkey(0)
-	address_0_2 = parse_path(seed, path)
-	print "Private Key 0:        ", bitcoin_wallet(address_0.get_private_key()).get_wif(True)
-	print "Public Key 0:         ", binascii.hexlify(ser_p(address_0.get_public_key()))
-	print "Address 0:            ", bitcoin_wallet(address_0.get_private_key()).get_address_as_b58(True)
+  path = "m/44'/0'/0'/0/0"
+  address_0 = bip_44_key.derive_subkey(0)
+  address_0_2 = parse_path(seed, path)
+  print "Private Key 0:        ", bitcoin_wallet(address_0.get_private_key()).get_wif(True)
+  print "Public Key 0:         ", binascii.hexlify(ser_p(address_0.get_public_key()))
+  print "Address 0:            ", bitcoin_wallet(address_0.get_private_key()).get_address_as_b58(True)
 
-	assert validate_address(bitcoin_wallet(address_0.get_private_key()).get_address_as_b58(True))
-	assert validate_address(bitcoin_wallet(address_0.get_private_key()).get_address_as_b58(False))
+  assert validate_address(bitcoin_wallet(address_0.get_private_key()).get_address_as_b58(True))
+  assert validate_address(bitcoin_wallet(address_0.get_private_key()).get_address_as_b58(False))
 
-	assert bitcoin_wallet(address_0.get_private_key()).get_wif(True) == bitcoin_wallet(address_0_2.get_private_key()).get_wif(True)
-	assert binascii.hexlify(ser_p(address_0.get_public_key())) == binascii.hexlify(ser_p(address_0_2.get_public_key()))
-	assert bitcoin_wallet(address_0.get_private_key()).get_address_as_b58(True) == bitcoin_wallet(address_0_2.get_private_key()).get_address_as_b58(True)
+  assert bitcoin_wallet(address_0.get_private_key()).get_wif(True) == bitcoin_wallet(address_0_2.get_private_key()).get_wif(True)
+  assert binascii.hexlify(ser_p(address_0.get_public_key())) == binascii.hexlify(ser_p(address_0_2.get_public_key()))
+  assert bitcoin_wallet(address_0.get_private_key()).get_address_as_b58(True) == bitcoin_wallet(address_0_2.get_private_key()).get_address_as_b58(True)
 
-	print
+  print
 
-	path = "m/44'/0'/0'/0/1"
-	address_1 = bip_44_key.derive_subkey(1)
-	address_1_2 = parse_path(seed, path)
-	print "Private Key 1:        ", bitcoin_wallet(address_1.get_private_key()).get_wif(True)
-	print "Public Key 1:         ", binascii.hexlify(ser_p(address_1.get_public_key()))
-	print "Address 1:            ", bitcoin_wallet(address_1.get_private_key()).get_address_as_b58(True)
+  path = "m/44'/0'/0'/0/1"
+  address_1 = bip_44_key.derive_subkey(1)
+  address_1_2 = parse_path(seed, path)
+  print "Private Key 1:        ", bitcoin_wallet(address_1.get_private_key()).get_wif(True)
+  print "Public Key 1:         ", binascii.hexlify(ser_p(address_1.get_public_key()))
+  print "Address 1:            ", bitcoin_wallet(address_1.get_private_key()).get_address_as_b58(True)
 
-	assert validate_address(bitcoin_wallet(address_1.get_private_key()).get_address_as_b58(True))
-	assert validate_address(bitcoin_wallet(address_1.get_private_key()).get_address_as_b58(False))
+  assert validate_address(bitcoin_wallet(address_1.get_private_key()).get_address_as_b58(True))
+  assert validate_address(bitcoin_wallet(address_1.get_private_key()).get_address_as_b58(False))
 
-	assert bitcoin_wallet(address_1.get_private_key()).get_wif(True) == bitcoin_wallet(address_1_2.get_private_key()).get_wif(True)
-	assert binascii.hexlify(ser_p(address_1.get_public_key())) == binascii.hexlify(ser_p(address_1_2.get_public_key()))
-	assert bitcoin_wallet(address_1.get_private_key()).get_address_as_b58(True) == bitcoin_wallet(address_1_2.get_private_key()).get_address_as_b58(True)
+  assert bitcoin_wallet(address_1.get_private_key()).get_wif(True) == bitcoin_wallet(address_1_2.get_private_key()).get_wif(True)
+  assert binascii.hexlify(ser_p(address_1.get_public_key())) == binascii.hexlify(ser_p(address_1_2.get_public_key()))
+  assert bitcoin_wallet(address_1.get_private_key()).get_address_as_b58(True) == bitcoin_wallet(address_1_2.get_private_key()).get_address_as_b58(True)
 
-	print
+  print
 
 if __name__ =='__main__':
   main()
