@@ -6,8 +6,9 @@ It is designed to conform to the BIP 32, BIP 44, and BIP 39 standards.
 
 The program outputs the seed as a 24-word (264-bit) mnemonic which can be written on 
 paper, stamped on metal, or encoded in a fireproof device (e.g. a cryptosteel.com device).
-The mnemonic phrases output by this tool may be imported into Wallet  software such as 
-Electrum, Mycelium, and Coinomi.
+The mnemonic phrases output by this tool may be imported into wallet software such as 
+Electrum, Mycelium, and Coinomi or any wallet that conforms to BIP 44 address paths and 
+supports importing BIP 39 menmonic phrases.
 
 The code is designed for maximum code readability and simplicity rather than for 
 optimized performance. This makes it easier to audit the code to ensure the absence 
