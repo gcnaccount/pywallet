@@ -5,7 +5,7 @@ Implements offline wallet generation to enables secure, offline or cold key gene
 It is designed to conform to the BIP 32, BIP 44, and BIP 39 standards.
 
 The program outputs the seed as a 24-word (264-bit) mnemonic which can be written on 
-paper, stamped on metal, or encoded in a fire proof device (e.g. a cryptosteel.com device).
+paper, stamped on metal, or encoded in a fireproof device (e.g. a cryptosteel.com device).
 The mnemonic phrases output by this tool may be imported into Wallet  software such as 
 Electrum, Mycelium, and Coinomi.
 
