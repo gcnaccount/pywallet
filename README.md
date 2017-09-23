@@ -13,7 +13,7 @@ supports importing BIP 39 menmonic phrases.
 The code is designed for maximum code readability and simplicity rather than for 
 optimized performance. This makes it easier to audit the code to ensure the absence 
 of backdoors. There are no external library dependencies and the classes altogether 
-are less than 400 of code lines. The most critical sections to review are the 
+are less than 400 lines of code. The most critical sections to review are the 
 random seed generation and the calculation of public addresses; as the corruption of
 either process could result in the loss or theft of coins sent to that address.
 
