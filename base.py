@@ -469,8 +469,7 @@ def parse_path(coin, seed, path):
     node = node.derive_subkey(int_index, hardened)
   return node
 
-def run_tests():
-  import test_vectors
+def run_tests(test_vectors):
   test_vectors.bip32_tests().execute_all_tests()
   test_vectors.bip39_tests().execute_all_tests()
   test_vectors.bip44_tests().execute_all_tests()
@@ -492,7 +491,7 @@ def print_usage_and_exit():
 # Generate random seed
 ################################################################################################
 
-def main(coin):
+def main(coin, test_vectors):
 
   # Parse command line options
   if len(argv) < 2:
@@ -507,7 +506,7 @@ def main(coin):
     word_encoder = mnemonic()
 
     if (argv[1].lower() == "test"):
-      run_tests()
+      run_tests(test_vectors)
       exit(0)
 	
     if (argv[1].lower() == "generate"):
