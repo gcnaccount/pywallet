@@ -686,36 +686,28 @@ def main(coin):
 
   print
   
-  # Replace the following with a loop for 5 addresses, table print, only make one wallet
+  print "Path:                   Address:                                Public Key:                                                             Private Key:"
+  for i in range(11):
+    path_i = "m/44'/" + coin.bip32_code + "'/0'/0/" + str(i)
+    address_i = bip_44_key.derive_subkey(i)
+    address_i2 = parse_path(coin, seed, path_i)
+    w = wallet(coin, address_i.get_private_key())
+    
+    child_private_key = w.get_wif(True)
+    child_public_key = binascii.hexlify(ser_p(address_i.get_public_key()))
+    child_address_i = w.get_address_as_b58(True)
+    
+    print path_i + "  \t" + child_address_i + "\t" + child_public_key + "\t" + child_private_key
 
-  path = "m/44'/" + coin.bip32_code + "'/0'/0/0"
-  address_0 = bip_44_key.derive_subkey(0)
-  address_0_2 = parse_path(coin, seed, path)
-  print "Private Key 0:        ", wallet(coin, address_0.get_private_key()).get_wif(True)
-  print "Public Key 0:         ", binascii.hexlify(ser_p(address_0.get_public_key()))
-  print "Address 0:            ", wallet(coin, address_0.get_private_key()).get_address_as_b58(True)
+    assert validate_address(w.get_address_as_b58(True))
+    assert validate_address(w.get_address_as_b58(False))
 
-  assert validate_address(wallet(coin, address_0.get_private_key()).get_address_as_b58(True))
-  assert validate_address(wallet(coin, address_0.get_private_key()).get_address_as_b58(False))
-
-  assert wallet(coin, address_0.get_private_key()).get_wif(True) == wallet(coin, address_0_2.get_private_key()).get_wif(True)
-  assert binascii.hexlify(ser_p(address_0.get_public_key())) == binascii.hexlify(ser_p(address_0_2.get_public_key()))
-  assert wallet(coin, address_0.get_private_key()).get_address_as_b58(True) == wallet(coin, address_0_2.get_private_key()).get_address_as_b58(True)
-
-  print
-
-  path = "m/44'/" + coin.bip32_code + "'/0'/0/1"
-  address_1 = bip_44_key.derive_subkey(1)
-  address_1_2 = parse_path(coin, seed, path)
-  print "Private Key 1:        ", wallet(coin, address_1.get_private_key()).get_wif(True)
-  print "Public Key 1:         ", binascii.hexlify(ser_p(address_1.get_public_key()))
-  print "Address 1:            ", wallet(coin, address_1.get_private_key()).get_address_as_b58(True)
-
-  assert validate_address(wallet(coin, address_1.get_private_key()).get_address_as_b58(True))
-  assert validate_address(wallet(coin, address_1.get_private_key()).get_address_as_b58(False))
-
-  assert wallet(coin, address_1.get_private_key()).get_wif(True) == wallet(coin, address_1_2.get_private_key()).get_wif(True)
-  assert binascii.hexlify(ser_p(address_1.get_public_key())) == binascii.hexlify(ser_p(address_1_2.get_public_key()))
-  assert wallet(coin, address_1.get_private_key()).get_address_as_b58(True) == wallet(coin, address_1_2.get_private_key()).get_address_as_b58(True)
+    w2 = wallet(coin, address_i2.get_private_key())
+    assert address_i.get_path() == address_i2.get_path(), str(address_i.get_path()) + " != " + str(address_i2.get_path())
+    assert w.get_wif(True) == w2.get_wif(True)
+    assert w.get_wif(False) == w2.get_wif(False)
+    assert ser_p(address_i.get_public_key()) == ser_p(address_i2.get_public_key())
+    assert w.get_address_as_b58(True) == w2.get_address_as_b58(True)
+    assert w.get_address_as_b58(False) == w2.get_address_as_b58(False)
 
   print
