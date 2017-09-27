@@ -1,7 +1,8 @@
 class coin_type:
 
-  def __init__(self, name, public_magic, private_magic, bip32_code, public_key_version, address_prefix, wif_version):
+  def __init__(self, name, symbol, public_magic, private_magic, bip32_code, public_key_version, address_prefix, wif_version):
     self.name = name
+    self.symbol = symbol
     self.public_magic = public_magic
     self.private_magic = private_magic
     self.bip32_code = bip32_code
@@ -12,6 +13,7 @@ class coin_type:
 # Bitcoin
 btc = coin_type(
   name = "Bitcoin",
+  symbol = "btc",
   public_magic = "0488B21E", # xpub
   private_magic = "0488ADE4", # xprv
   bip32_code = "0",
@@ -22,6 +24,7 @@ btc = coin_type(
 # Bitcoin cash
 bch = coin_type(
   name = "Bitcoin Cash",
+  symbol = "bch",
   public_magic = "0488B21E", # xpub
   private_magic = "0488ADE4", # xprv
   bip32_code = "145",
@@ -32,6 +35,7 @@ bch = coin_type(
 # Litecoin
 ltc = coin_type(
   name = "Litecoin",
+  symbol = "ltc",
   public_magic = "019DA462", # Ltub
   private_magic = "019D9CFE", # Ltpv
   bip32_code = "2",

@@ -234,32 +234,32 @@ class bip44_tests:
     assert w.serialize_private() == "xprv9s21ZrQH143K36J6xmaUWkrDFTgCAo8v3T5vgbcT7HQH55XD3XMF88CmYJDeXsbRcFw14kP5vDBCjDdX5JyRLM5LgbiQbfZXXo5G6nnPbM9"
     
     # Account Extended Keys
-    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/0'/0'")
-    assert w.serialize_private() == "xprv9yGa4qdGEike4bgpvnSca1rLvDh8uXiKrZoxaiK1UAts1Ljz4ZmYwGeZeDVGpiMwM3TtSSvUd7ZdrwKWMwuBPD78U2jMMmiWs5Jp61o46aa"
-    assert w.serialize_public() == "xpub6CFvUMAA56JwH5mJ2oycw9o5UFXdJzSBDnjZP6id2WRqt958c75oV4y3VWN6Ro1dewtP9cdEV5VDUvWBJpENWxBAoQv6d88m3bhZfjmEQ33"
+    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/145'/0'")
+    assert w.serialize_private() == "xprv9ymfPsSR8x5aRgQJHedAZXLnh2P2JNzGPw2fNMFWLKd7Xgtaqru7XNEEdxWjciL1SZj7rJDoCS48hQj714bZozSispMLoLxmtp5CMDqQiQY"
+    assert w.serialize_public() == "xpub6Cm1oNyJyKdseAUmPgAAvfHXF4DWhqi7m9xGAjf7tfA6QVDjPQDN5AYiVFggvDVyaCAkPWiaSDCAfGeqBQraqfQyCkNuk1LM8z77qY572i2"
    
     # BIP 32 Extended Keys
-    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/0'/0'/0")
-    assert w.serialize_private() == "xprv9zxbcTUDnJNjgh2ijkGP2iyQfsauooNT3msQdrJXjCuSLKXkPdGo3crfLQKByxRT5H5zG8tZVX5HbXNMRqvaxqLBGtHWD4pEWXiWmbVvMH1"
-    assert w.serialize_public() == "xpub6Dwx1y17cfw2uB7BqmoPPrv9DuRQDG6JQzo1SEi9HYSRD7rtwAb3bRB9BffNUHBVEQWmRgea42PNuvAEWqNj8bsgc2wT9jpWNeFdA3rRmPU"
+    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/145'/0'/0")
+    assert w.serialize_private() == "xprvA2KASUhSAH6cGuM9SqZkyY8zEVuL5M7nMDdVNQBLGfu5hxKKmxJoLeHCVSuVyDyoVtiAuJy4VQ9abfsbCZ81Qqmg3pV24amS9WHVa1xUeiM"
+    assert w.serialize_public() == "xpub6FJWqzEKzeeuVPRcYs6mLg5inXjpUoqdiSZ6Anawq1S4akeUKVd3tSbgLjoqPxHFbNaLj8LU7xbU2dGoEMJShF74cm1XTq2feTdthWNcULd"
    
     # Address 0
-    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/0'/0'/0/0")
-    assert wallet(coin, w.get_private_key()).get_address_as_b58(True) == "1Gx1DxJk8wLup9Fs3Xby75oFwPmDWSzes"
-    assert binascii.hexlify(ser_p(w.get_public_key())) == "0240f1633ccfcbc1b8caae951a61ed4986f43a74f33b95133a9d6a845f4da0bb30"
-    assert wallet(coin, w.get_private_key()).get_wif(True) == "KyfmZGPLDfo64TRhf6y6RLDAZBvrRu6qJ3vue1mftbStUvHgCj2A"
+    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/145'/0'/0/0")
+    assert wallet(coin, w.get_private_key()).get_address_as_b58(True) == "1CsUBwrDeKrQdvCrTMojtPeB6CBvNEzE9V"
+    assert binascii.hexlify(ser_p(w.get_public_key())) == "02a5928c1cc4692761a0d99ccb8f0ade38968710d8e06fd7fa3992ca55d4e2dbb5"
+    assert wallet(coin, w.get_private_key()).get_wif(True) == "Ky1fGJxcrMTCSdwa2C47wR6VwMQqS3xx32vTR92JqpxZe4HcgS7U"
    
     # Address 1
-    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/0'/0'/0/1")
-    assert wallet(coin, w.get_private_key()).get_address_as_b58(True) == "1GCWs7cepowJUTxnqxG69UJtqff9vbZ86W"
-    assert binascii.hexlify(ser_p(w.get_public_key())) == "02c4071687f6c5cfad040e4fdf18ae75c4571d77b030a02c9509f2ec5aa77678ca"
-    assert wallet(coin, w.get_private_key()).get_wif(True) == "L2ktncxrucystNusuuPopH8W2vrQXQPoLxLrHWkFzUrS1o5ZuspJ"
+    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/145'/0'/0/1")
+    assert wallet(coin, w.get_private_key()).get_address_as_b58(True) == "19jn6GtJHgeUKRuFyP3Kkoqp7kJXLmFgL3"
+    assert binascii.hexlify(ser_p(w.get_public_key())) == "03f2e5dce72dfb74dcf209222a55c59fc62f121c67c252ba46c42da1db64adf8fc"
+    assert wallet(coin, w.get_private_key()).get_wif(True) == "L1JJYqPh4MRvg14hhLAyfRU3yUgVeuvqBXuFEGW4Md8gh9zX4sur"
    
     # Address 2
-    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/0'/0'/0/2")
-    assert wallet(coin, w.get_private_key()).get_address_as_b58(True) == "1FbJuUBa1SnvNCZhWeubM1TgSoyYxLzGWD"
-    assert binascii.hexlify(ser_p(w.get_public_key())) == "0246b08c5ebbfc4bd6c8a638cb24414eea67d772b8dbc576f965789532848f001f"
-    assert wallet(coin, w.get_private_key()).get_wif(True) == "KwpYqM7wnweUJJYG3bS9SCZr3Cz83S9HvweDHAT79mKfxWRbYZAu"
+    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/145'/0'/0/2")
+    assert wallet(coin, w.get_private_key()).get_address_as_b58(True) == "15Pk1H3dyg8i5S3Bq7JvtVudVFUkfASyFG"
+    assert binascii.hexlify(ser_p(w.get_public_key())) == "020d639ea1a4b91d97b576ac5288f0eca53fdfd14e742b0a1f853512f023ed2fca"
+    assert wallet(coin, w.get_private_key()).get_wif(True) == "L12wtwuL85nx3Rs34xRi7WREumjGCwM4V73R6ZD3mTeDJHj774Dh"
    
     print "passed"
     
@@ -277,32 +277,32 @@ class bip44_tests:
     assert w.serialize_private() == "xprv9s21ZrQH143K2B39xaq7CnpdsqffCh85252NK394HisFHqgXXJ1xnfj4gzYacgksXQGPNhEej49RgJd3VLgLQegZW5xYU9Ez8rqLv1kCCTk"
     
     # Account Extended Keys
-    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/0'/0'")
-    assert w.serialize_private() == "xprv9yBLtnxPg435inGujiffBUCNWozD75fQH5NgdmqdeYfA8WxKs4LkwFePGXyMq7uhsQTbYnouArukJ82jk45tTukjfT9UoJnxEncjg1hWWxY"
-    assert w.serialize_public() == "xpub6CAhJJVHWRbNwGMNqkCfYc974qphWYPFeJJHSAFFCtC91KHUQbf1V3xs7nbSaWcXhuHN6hwpUnVgjUkME9Cs2TEo35GfV7JQmiwkd6UpoUn"
+    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/145'/0'")
+    assert w.serialize_private() == "xprv9ykUNwp9XmShzuefxtYL3Qa81HiVXdr6S8pqiucBPDzjtnYCXqFfHbMMeeErq8cmT97qG9gcAiLfUQkGQhG6PZa9v5vCgysbaZfnkNyPBXp"
+    assert w.serialize_public() == "xpub6CjpnTM3N911DPj94v5LQYWrZKYyw6ZwoMkSXJ1nwZXimasM5NZuqPfqVtV3zASgWBYCssEZdRGJPernVNmnzdbJigNLFaMXoQo1HShNxhD"
    
     # BIP 32 Extended Keys
-    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/0'/0'/0")
-    assert w.serialize_private() == "xprvA27wJkVzRgyC9DS85DCGCrbctAUEE1ux6jiViXkK65J7AUZAXf2749LnkMDkFadGJkNmTKufkw61P4M4WiE4YuuuMvQDdEJ9bjjLCgy1TsF"
-    assert w.serialize_public() == "xpub6F7HiG2tG4XVMhWbBEjGZzYMSCJidUdoTxe6Wv9veQq63GtK5CLMbwfGbetBn391UfeoXJ43KM6acczuesZfVhTRWcK3JtfpvjBftpNtdam"
+    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/145'/0'/0")
+    assert w.serialize_private() == "xprvA1jCfdhVt3gZEYt2XYKfv1JYvAWKxuFSivsxVqSY16cuS8JcPHBLbfhXFzpwCzbVJSHSbue3g3jVR7N7zsqfPVEwM9FcmLXp8KXfMBxdD7Z"
+    assert w.serialize_public() == "xpub6EiZ59EPiRErT2xVdZrgH9FHUCLpNMyJ69oZJDr9ZS9tJvdkvpVb9U217HKevnkefLqK7cLrnkSeF5bC8RvP98GYLEtQdiLDYb6nEGikYKc"
    
     # Address 0
-    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/0'/0'/0/0")
-    assert wallet(coin, w.get_private_key()).get_address_as_b58(True) == "1DDiejXEZ2uecBVKhWo1pLj4hqfiz8r2XQ"
-    assert binascii.hexlify(ser_p(w.get_public_key())) == "03a91a3236334af3ea8997bed5cf33d25c84954d9a033a8ac8c5d23d3ca8f72fd7"
-    assert wallet(coin, w.get_private_key()).get_wif(True) == "KzdV7wCFEBbv1WF2ZSyiaZkWSm4fjVy2Hri7pL5Cq9VwEdWWDkPR"
+    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/145'/0'/0/0")
+    assert wallet(coin, w.get_private_key()).get_address_as_b58(True) == "1AmqoU6jjtXU13MDygWAYU3gmDvWimq5CC"
+    assert binascii.hexlify(ser_p(w.get_public_key())) == "0288bbe33f2125dce5a9999afb73dafbb7adca3d0bac136a9a3be36e2c49d5c37c"
+    assert wallet(coin, w.get_private_key()).get_wif(True) == "KyP5sSEiRgTvQDroJuaTzLL2NpJ4mFZzvg4Y8Dy4aDydGwF8gdhy"
    
     # Address 1
-    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/0'/0'/0/1")
-    assert wallet(coin, w.get_private_key()).get_address_as_b58(True) == "1NyRQ9HPPv2FWZqhXzkjedSSYV61i4FcRV"
-    assert binascii.hexlify(ser_p(w.get_public_key())) == "03a9948a0c53dc5325cb34e032c5935c7d631efb0b90f722f2bde0cc9962553925"
-    assert wallet(coin, w.get_private_key()).get_wif(True) == "L2RbrcUxn4zFLYKeXXWN8UntHe2mnLUiWTs4ahikHsHAEuk1Qx87"
+    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/145'/0'/0/1")
+    assert wallet(coin, w.get_private_key()).get_address_as_b58(True) == "1DR7zk8S3Xp53UkNopex3F1eFhQnVnRude"
+    assert binascii.hexlify(ser_p(w.get_public_key())) == "02f381f9977920d66b2a43ae6da8e2f827a8674510ac593724c3f60e69ecaa8115"
+    assert wallet(coin, w.get_private_key()).get_wif(True) == "KwogkX9QQ1NfSXQgCaj9RyQTqAzisAELvywUDpha3qYKBvSqzpsr"
    
     # Address 2
-    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/0'/0'/0/2")
-    assert wallet(coin, w.get_private_key()).get_address_as_b58(True) == "1Ke1A63TvAEe5gnjfmPNqaR1rbmKQAYMV9"
-    assert binascii.hexlify(ser_p(w.get_public_key())) == "0234a3c3b8f2b33496959c854be320605d1a5db677b2fa98c0169dcce9840b9ac5"
-    assert wallet(coin, w.get_private_key()).get_wif(True) == "L2r1UqVqJJm9q2FVG7TgtDKGimuhqFicrwRPWjtP7fu8DPKZYk1N"
+    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/145'/0'/0/2")
+    assert wallet(coin, w.get_private_key()).get_address_as_b58(True) == "1MRMfAY5bQLVFCHaBQBgM6iPxEMKZKZnkU"
+    assert binascii.hexlify(ser_p(w.get_public_key())) == "03879acdad33885c130dd53f57e93ae5ed882d381b4779998cd88e5da2d3f79042"
+    assert wallet(coin, w.get_private_key()).get_wif(True) == "Kx7WMNvrfe1oGsQuZTMDEQxJtnn3UYVA88XJHpp7DSUdkPSGu5SZ"
     
     print "passed"
     
@@ -320,31 +320,31 @@ class bip44_tests:
     assert w.serialize_private() == "xprv9s21ZrQH143K2XsuohTCdKvLRBNW4f2kQkTCYzfa4VKy6VGSLHu1RgAzNshQ6QbNb11fKVmhDKHFXJENNJ3CoV918WDRxUDTDVQx3vaWUEC"
     
     # Account Extended Keys
-    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/0'/0'")
-    assert w.serialize_private() == "xprv9xkVb8fbs1KjBB1YdoqFN1VMbctzX56JKhKLPTg3PGipT2nxhc6Xa3L1xWTdWsi2RGHiwEGVvMkZogQnkre45cB1vtjhFpEtkc7chnNW2A3"
-    assert w.serialize_public() == "xpub6BjqzeCVhNt2Pf61jqNFj9S69ejUvXp9gvEwBr5ewcFoKq87F9Qn7qeVomshXnqhHMVsZVYzeobhuKEeMMEoFZHqfzSBdKodVKdYTtxQo1L"
+    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/145'/0'")
+    assert w.serialize_private() == "xprv9yEc6BLstPi24iicphk5GEyWR2YVtuSyu6egbmFgLoSTrsMumZSMsm4rPLJVZgW9oYA2YPCG6FSSJe5AoczYz6yQGwUL2j3tCaRf6BvkiAQ"
+    assert w.serialize_public() == "xpub6CDxVgsmimGKHCo5vjH5dNvEy4NzJNAqGKaHQ9fHu8ySjfh4K6kcRZPLEbpMksJQVdPuPJESLW4uDfnLQ6Jtpz8vFsAGooN5qmgTsaVwAhy"
    
     # BIP 32 Extended Keys
-    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/0'/0'/0")
-    assert w.serialize_private() == "xprv9zxz4jzwncgQLqnBhcJAKdNQYvqXbr7rceB5LrWwKcGs347pJqwZkKW3gV8aJsFtSuNDVEdocyzBoNn4c4XgFVyok3GrEndnRTwVq23GnGZ"
-    assert w.serialize_public() == "xpub6DxLUFXqczEhZKreodqAgmK96xg21Jqhys6g9EvYswoqurSxrPFpJ7pXXkS6HoKNyNJVEECoGu8gVho2M6n6wFScC8AuL89qvD7eTN4JMTp"
+    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/145'/0'/0")
+    assert w.serialize_private() == "xprv9zrAp9LDrjoRUSxEUKDCeD9FJ2QztAQSdYCakHuuTNnCxwYCrYaPEjvc6jHMbuYU78uEbvUbG55R37rMqmegpxrpJarn9M549XpEvysM7Rz"
+    assert w.serialize_public() == "xpub6DqXDes7h7Migw2haLkD1M5yr4FVHd8Hzm8BYgKX1iKBqjsMQ5tdnYF5wzjSumGWa29aQ7jfG7vNmLPezRVW4Kk8d13y9ytYRcqM2n7HStr"
    
     # Address 0
-    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/0'/0'/0/0")
-    assert wallet(coin, w.get_private_key()).get_address_as_b58(True) == "15ofBkYCJRdSfxjUdRd5cFYSGD9tdXCosE"
-    assert binascii.hexlify(ser_p(w.get_public_key())) == "02867ba08c5e22f9d8e7094fa95a8e3dd2e284625715a1bafaa8e267a96dd22611"
-    assert wallet(coin, w.get_private_key()).get_wif(True) == "Kwo4GS7QFdmQGUVGZWbtkKaQYJBFTccQSbnDNfVAqjWfqGcHgFuK"
+    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/145'/0'/0/0")
+    assert wallet(coin, w.get_private_key()).get_address_as_b58(True) == "1EWWNDPheZu1J29acSKFTkS5B86SozoSXi"
+    assert binascii.hexlify(ser_p(w.get_public_key())) == "02d79d4e9e66740cbd3e5f0caecf666f7a9f8a28a0b7fc0a9b373641d5b97f83b1"
+    assert wallet(coin, w.get_private_key()).get_wif(True) == "Ky2fjqFZs3heaRCjdZAPhrGCqnb3rFVTw1TyMQyXdJ4YqTUiCM4W"
    
     # Address 1
-    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/0'/0'/0/1")
-    assert wallet(coin, w.get_private_key()).get_address_as_b58(True) == "1PvJWvJHjWbJGbV4rA7vTX1Xp22NtLr6A4"
-    assert binascii.hexlify(ser_p(w.get_public_key())) == "0258fb30ce3a54142a8f751580cac9e7b82e1f7a03c16d1eddd1ca3e1759956d12"
-    assert wallet(coin, w.get_private_key()).get_wif(True) == "L2T7ZN5g9QSyJm6y5hSMr6Ub8mQHv7ArRpMXu1fHDZ9cFqP7BCEs"
+    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/145'/0'/0/1")
+    assert wallet(coin, w.get_private_key()).get_address_as_b58(True) == "1A8EDgMSd2V41hb9VKet8eCaNVUk87EGz3"
+    assert binascii.hexlify(ser_p(w.get_public_key())) == "03b308291a2f3f3246c9351c9f14786882c22a3b5703dea2ad51fd64e065b45064"
+    assert wallet(coin, w.get_private_key()).get_wif(True) == "L2XfMs3LxL4MFxXtLLbFyQehNeBDq6d3r83XG3nHmQpZVwtH3Lkb"
    
     # Address 2
-    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/0'/0'/0/2")
-    assert wallet(coin, w.get_private_key()).get_address_as_b58(True) == "1MNUXYaKSDD5f5124xYr6BV5r65Go3QTq8"
-    assert binascii.hexlify(ser_p(w.get_public_key())) == "03558d25d3ecad28501b5654b5c3ec106a926410d9b7f5eee51f978aeb93dfe8b5"
-    assert wallet(coin, w.get_private_key()).get_wif(True) == "L4b2xRBcdQw7GMKMrCmpwZ2pvuTrQQFfjwf7M9eXnnnGnEyvTEBM"
+    w = parse_path(coin, binascii.unhexlify(seed), "m/44'/145'/0'/0/2")
+    assert wallet(coin, w.get_private_key()).get_address_as_b58(True) == "14CibJgfQEbou6DQaqr48aDq48an9h8c9H"
+    assert binascii.hexlify(ser_p(w.get_public_key())) == "03bb786df6253de706fb8b521b6f9a61cd54cb9bd04359596811c1b24a9abdd572"
+    assert wallet(coin, w.get_private_key()).get_wif(True) == "L5WuBa8ExEdrYTd1DCmsUjoz8imjF23mavZmmFNp2TGAU6KV57oh"
    
     print "passed"
