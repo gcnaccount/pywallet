@@ -2,9 +2,9 @@
 # Test Functions
 ################################################################################################
 
-import coin_types
+from lib import coin_types
 
-from base import *
+from lib.base import *
 
 coin = coin_types.btc
 
