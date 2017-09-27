@@ -1,5 +1,5 @@
 import coin_types
-import ltc_test_vectors
+from test import ltc_test_vectors
 
 from base import *
 

@@ -1,5 +1,5 @@
 import coin_types
-import bch_test_vectors
+from test import bch_test_vectors
 
 from base import *
 

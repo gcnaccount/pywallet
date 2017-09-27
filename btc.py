@@ -1,5 +1,5 @@
 import coin_types
-import btc_test_vectors
+from test import btc_test_vectors
 
 from base import *
 
