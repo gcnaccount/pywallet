@@ -1,8 +1,8 @@
-from base import *
+from lib.base import *
+from lib import coin_types
 from urllib import urlopen
 
 import json
-import coin_types
 
 def get_price(coin, currency="USD"):
   rate_uri = "https://min-api.cryptocompare.com/data/price?fsym=" + coin.symbol.upper() + "&tsyms=USD"
