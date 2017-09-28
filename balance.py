@@ -78,6 +78,7 @@ def get_account_value(root_public_key, coin, price):
   change = account.derive_subkey(1) # Change address
 
   value = 0.0
+  coins = 0.0
   print "Path:                   Address:                                Balance (coins):        Balance (USD):"
 
   # Receive addresses
@@ -91,6 +92,7 @@ def get_account_value(root_public_key, coin, price):
       break
     balance_usd = float(balance_coin) * price
     value += balance_usd
+    coins += balance_coin
     print path_i + "  \t" + child_address_i + "\t" + str(balance_coin).rjust(16) + "\t" + str(balance_usd)
     
   # Change addresses
@@ -104,9 +106,10 @@ def get_account_value(root_public_key, coin, price):
       break
     balance_usd = float(balance_coin) * price
     value += balance_usd
+    coins += balance_coin
     print path_i + "  \t" + child_address_i + "\t" + str(balance_coin).rjust(16) + "\t" + str(balance_usd)
     
-  return value
+  return value, coins
 
 
 def main():
@@ -136,9 +139,10 @@ def main():
   print
 
   # Lookup wallet balances
-  value = get_account_value(root_public_key, coin, price)
+  value, coins = get_account_value(root_public_key, coin, price)
 
   print
+  print "Total coins:                     " + str(coins) + " " + coin.symbol.upper()
   print "Total account value (USD):      $" + str(value)
   print
 
