@@ -22,16 +22,18 @@ in any wallet generation software relate to the random seed generation and the
 derivation of public addresses; as the corruption of either process could result 
 in the loss or theft of coins sent to that address.
 
-Note that this software is not intended for production use. It is recommended to be 
-used as a secondary or tertiary means to compare against outputs made by other 
-offline wallet generation tools, e.g., together with a downloaded version of:
-* https://iancoleman.github.io/bip39/
-* https://www.ledgerwallet.com/support/bip39-standalone.html
+Note that this software is not intended for production use. It should only 
+be used as a secondary or tertiary generation means to compare against 
+outputs made by other offline wallet generation tools, e.g., together 
+with a downloaded copies of generation tools such as:
+
+* https://iancoleman.github.io/bip39/ together with
+* https://www.ledgerwallet.com/support/bip39-standalone.html together with
 * https://coinomi.com/recovery-phrase-tool.html
 
-Using this version, with its easily audited code helps establish confidence in the 
-proper calculation of wallets and addresses; helping to ensure that it is done 
-both correctly and randomly.
+Using this tool, with its easily audited code, helps establish confidence in the 
+proper calculation of wallets and addresses, which helps to build confidence that
+generation is performed both correctly and randomly.
 
 Usage:
 
@@ -59,7 +61,7 @@ Recover a private key:
   $ python <btc.py/bch.py/ltc.py> recover "mnemonic phrase" [passphrase]
 
     This recovers a private key from the 24-word mnemonic and optionally a passphase (if one was 
-    supplied at the creation). It is very prudent to perform a recovery of a newly generated and 
-    backed up private key to ensure it is properly recorded before sending any coins to it.  
+    supplied during generation). It is prudent to perform a recovery of any newly generated and 
+    backed up private key to ensure it is properly recorded *before* sending any coins to it.  
     Additionally, verifying proper receipt and spendability with a low value of coins is good to 
-    ensure a correct correspondance between the public address and the private key.
+    ensure a correct correspondance between the displayed public address and the private key.
