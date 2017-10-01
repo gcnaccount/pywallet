@@ -5,7 +5,7 @@ Implements offline wallet generation to support secure, manual, offline, and col
 It supports multple coin types, including Bitcoin (BTC), Bitcoin cash (BCH), and Litecoin (LTC).
 It conform to the BIP 32, BIP 44, and BIP 39 standards for Hierarchical Deterministic (HD) wallets.
 
-The software (btc.py / bch.py / ltc.py) output the wallet seed as a 24-word (264-bit) mnemonic 
+The software (btc.py / bch.py / ltc.py) outputs the wallet seed as a 24-word (264-bit) mnemonic 
 which can be written on paper, stamped on to metal, or encoded in a fireproof device (e.g. a 
 cryptosteel.com device or similar). The mnemonic phrases output by this tool may be imported 
 into wallet software such as Electrum, Mycelium, and Coinomi or any wallet that conforms to 
