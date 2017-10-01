@@ -28,6 +28,7 @@ offline wallet generation tools, e.g., together with a downloaded version of:
 * https://iancoleman.github.io/bip39/
 * https://www.ledgerwallet.com/support/bip39-standalone.html
 * https://coinomi.com/recovery-phrase-tool.html
+
 Using this version, with its easily audited code helps establish confidence in the 
 proper calculation of wallets and addresses; helping to ensure that it is done 
 both correctly and randomly.
