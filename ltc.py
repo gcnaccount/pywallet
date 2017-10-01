@@ -1,3 +1,4 @@
+#!/usr/bin/python
 ################################################################################################
 # 
 # Copyright (c) 2017 Jason Resch
@@ -22,10 +23,8 @@
 #
 ################################################################################################
 
-from lib import coin_types
-from test import ltc_test_vectors
+from lib.main import main
+from lib.coin_types import ltc
 
-from lib.base import *
-
-# Set type of coin to "LTC" - Litecoin
-main(coin_types.ltc, ltc_test_vectors)
+if __name__ == "__main__":
+    main(ltc)

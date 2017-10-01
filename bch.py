@@ -1,3 +1,4 @@
+#!/usr/bin/python
 ################################################################################################
 # 
 # Copyright (c) 2017 Jason Resch
@@ -22,10 +23,8 @@
 #
 ################################################################################################
 
-from lib import coin_types
-from test import bch_test_vectors
+from lib.main import main
+from lib.coin_types import bch
 
-from lib.base import *
-
-# Set type of coin to "BCH" - Bitcoin Fork for Bitcoin Cash
-main(coin_types.bch, bch_test_vectors)
+if __name__ == "__main__":
+    main(bch)
