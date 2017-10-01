@@ -17,7 +17,7 @@ used to recover the same HD wallet seed using any of those three scripts.
 The code is designed for maximum code readability and simplicity rather than for 
 optimized performance. This makes it easier to audit the code to ensure the absence 
 of backdoors. There are no external library dependencies and important classes (in 
-base.py) are less than 400 lines of code. The most critical sections to review 
+base.py) are less than 500 lines of code. The most critical sections to review 
 in any wallet generation software relate to the random seed generation and the 
 derivation of public addresses; as the corruption of either process could result 
 in the loss or theft of coins sent to that address.
