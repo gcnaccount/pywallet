@@ -89,6 +89,26 @@ class curve:
       cpow2 = self.point_double(cpow2)
     return r
 
+  # Checks if a is a "perfect square" modulo p
+  def is_quad_residue(self, a):
+    inv2 = self.mod_inv(2)
+    e = ((self.p - 1) * inv2) % self.p
+    return (pow(a, e, self.p) == 1)
+    
+  # Computes square root
+  def sqr_root(self, a):
+    if (not ((self.p % 4) == 3)):
+      raise Exception("Curve can't use this method")
+    inv4 = self.mod_inv(4)
+    e = ((self.p + 1) * inv4) % self.p
+    return pow(a, e, self.p)
+
+  def x_to_point(self, x):
+    yy = (pow(x, 3, self.p) + (self.a * x) + self.b) % self.p
+    if self.is_quad_residue(yy):
+      y = self.sqr_root(yy)
+      return point(x, y)
+
 class point:
   def __init__(self, x, y):
     self.x = x
