@@ -32,7 +32,7 @@ with a downloaded copies of generation tools such as:
 * https://coinomi.com/recovery-phrase-tool.html
 
 Using this tool, with its easily audited code, helps establish confidence in the 
-proper calculation of wallets and addresses, which helps to build confidence that
+proper calculation of wallets and addresses, which helps to ensure that
 generation is performed both correctly and randomly.
 
 Usage:
