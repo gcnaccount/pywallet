@@ -25,7 +25,7 @@ in the loss or theft of coins sent to that address.
 Note that this software is not intended for production use. It should only 
 be used as a secondary or tertiary generation method to compare against 
 outputs made by other offline wallet generation tools, e.g., together 
-with a downloaded copie of generation tools such as:
+with a downloaded copies of generation tools such as:
 
 * https://iancoleman.github.io/bip39/ together with
 * https://www.ledgerwallet.com/support/bip39-standalone.html together with
