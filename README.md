@@ -23,7 +23,7 @@ derivation of public addresses; as the corruption of either process could result
 in the loss or theft of coins sent to that address.
 
 Note that this software is not intended for production use. It should only 
-be used as a secondary or tertiary generation means to compare against 
+be used as a secondary or tertiary generation method to compare against 
 outputs made by other offline wallet generation tools, e.g., together 
 with a downloaded copie of generation tools such as:
 
