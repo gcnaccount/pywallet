@@ -14,13 +14,12 @@ BIP 44 address paths and supports importing BIP 39 menmonic phrases.
 Note that the phrase output by any of the generation scripts (btc.py / bch.py / ltc.py) can be 
 used to recover the same HD wallet seed using any of these three scripts.
 
-The code is designed for maximum code readability and simplicity rather than for 
-optimized performance. This makes it easier to audit the code to ensure the absence 
-of backdoors. There are no external library dependencies and important classes (in 
-base.py) are less than 500 lines of code. The most critical sections to review 
-in any wallet generation software relate to the random seed generation and the 
-derivation of public addresses; as the corruption of either process could result 
-in the loss or theft of coins sent to that address.
+The code is designed for maximum readability and simplicity rather than for 
+optimal performance. This makes it easier to audit the code and ensure the absence 
+of backdoors. There are no external library dependencies and relevant classes (in 
+base.py) are together less than 500 lines of code. The most critical sections to review 
+in any wallet generation software are the random seed generation and derivation of addresses.
+The corruption of either process could result in the loss or theft of coins.
 
 Note that this software is not intended for production use. It should only 
 be used as a secondary or tertiary generation method to compare against 
@@ -33,7 +32,7 @@ with a downloaded copies of generation tools such as:
 
 Using this tool, with its easily audited code, helps establish confidence in the 
 proper calculation of wallets and addresses, which helps to ensure that
-generation is performed both correctly and randomly.
+generation is performed both randomly and correctly.
 
 Usage:
 
