@@ -1,5 +1,6 @@
 #!/bin/sh
 
+cd test
 
 echo "Running BTC Tests"
 ./test-btc.sh
