@@ -12,7 +12,7 @@ into wallet software such as Electrum, Mycelium, and Coinomi or any wallet that 
 BIP 44 address paths and supports importing BIP 39 menmonic phrases.
 
 Note that the phrase output by any of the generation scripts (btc.py / bch.py / ltc.py) can be 
-used to recover the same HD wallet seed using any of those three scripts.
+used to recover the same HD wallet seed using any of these three scripts.
 
 The code is designed for maximum code readability and simplicity rather than for 
 optimized performance. This makes it easier to audit the code to ensure the absence 
