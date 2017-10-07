@@ -25,26 +25,41 @@
 
 from lib.base import *
 from lib import coin_types
-from urllib import urlopen
+import urllib2
 
 import json
 
+def load_url(url):
+  opener = urllib2.build_opener()
+  opener.addheaders = [('User-Agent', 'Mozilla/5.0')]
+  return opener.open(url)
+
 def get_price(coin, currency="USD"):
   rate_uri = "https://min-api.cryptocompare.com/data/price?fsym=" + coin.symbol.upper() + "&tsyms=USD"
-  response = urlopen(rate_uri)
+  response = load_url(rate_uri)
   result = response.read()
   text = json.loads(result)
   return float(text[currency])
 
 def get_balance(coin, address):
   satoshis_per_coin = 100 * 1000 * 1000 # 100 million
-  balance_uri = "https://api.blockcypher.com/v1/" + coin.symbol + "/main/addrs/" + address + "/balance"
+  if coin.symbol == "bch":
+    balance_uri = "https://bitcoincash.blockexplorer.com/api/addr/" + address
+  else:
+    balance_uri = "https://api.blockcypher.com/v1/" + coin.symbol + "/main/addrs/" + address + "/balance"
 
-  response = urlopen(balance_uri)
+  response = load_url(balance_uri)
   result = response.read()
   text = json.loads(result)
-  num_transactions = int(text["n_tx"])
-  return float(text["final_balance"]) / float(satoshis_per_coin), num_transactions
+
+  if coin.symbol == "bch":
+    num_transactions = text["txApperances"]
+    satoshis = float(text["balanceSat"])
+  else:
+    num_transactions = int(text["n_tx"])
+    satoshis = float(text["final_balance"]) 
+
+  return satoshis / float(satoshis_per_coin), num_transactions
 
 def decompress_point(compressed_public_key):
   parity = ord(compressed_public_key[:1]) - 2
@@ -89,6 +104,7 @@ def get_account_value(root_public_key, coin, price):
     a = public_address(coin, address_i.get_public_key())
     child_address_i = a.get_address_as_b58(True)
     balance_coin, transactions = get_balance(coin, child_address_i)
+    get_balance(coin, child_address_i)
     if (transactions == 0):
       break
     balance_usd = float(balance_coin) * price
