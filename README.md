@@ -42,8 +42,8 @@ Execute internal tests:
 
     This runs a suite of tests to ensure correct operation using published test vectors. This 
     should be run at least once on the machine on which you intend to generate keys. The test 
-    script ("test-btc.sh") performs additional tests. It checks that the outputs of this tool 
-    can be used to recover the same key.
+    script ("test-all.sh") performs additional tests. It verifies that the outputs of this tool 
+    can be used to recover the same seed and derive the same keys and addresses.
 
 Generate new private key:
 
